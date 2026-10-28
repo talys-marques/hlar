@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { url } from '../lib/site.mjs';
+---
+
+<Base titulo="Página não encontrada">
+  <section class="secao nao-encontrada">
+    <div class="container">
+      <p class="codigo">404</p>
+      <h1>Página não encontrada</h1>
+      <p>O endereço pode ter mudado ou a página não existe mais.</p>
+      <div class="botoes">
+        <a href={url('/')} class="botao">Ir para o início <Icon nome="seta" tamanho={18} /></a>
+        <a href={url('/#contato')} class="botao botao-contorno">Fale conosco</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nao-encontrada {
+    text-align: center;
+  }
+
+  .codigo {
+    margin: 0;
+    color: var(--vermelho);
+    font-size: clamp(5rem, 3rem + 8vw, 9rem);
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .botoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 28px;
+  }
+</style>

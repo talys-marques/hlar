@@ -1,0 +1,22 @@
+{
+  "name": "hlar",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "verificar": "node scripts/verificar-links.mjs",
+    "icones": "node scripts/gerar-icones.mjs"
+  },
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource/lato": "^5.2.0",
+    "astro": "^7.4.2",
+    "sharp": "^0.35.5"
+  }
+}

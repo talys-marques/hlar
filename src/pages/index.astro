@@ -1,0 +1,406 @@
+---
+import { Image, Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { SITE, CONTATO, EMPREENDIMENTOS } from '../config.mjs';
+import { imagem } from '../lib/imagens.mjs';
+---
+
+<Base>
+  <section class="hero" id="inicio">
+    <Picture
+      src={imagem('hero')}
+      alt=""
+      formats={['avif', 'webp']}
+      widths={[768, 1280]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="hero-foto"
+    />
+    <div class="container hero-texto">
+      <span class="sobretitulo">Uma empresa do Grupo Herval</span>
+      <h1>Qualidade, detalhe por detalhe</h1>
+      <p>Descubra os empreendimentos da H.Lar e encontre seu novo lar.</p>
+      <div class="hero-botoes">
+        <a href="#empreendimentos" class="botao">Ver empreendimentos <Icon nome="seta" tamanho={18} /></a>
+        <a href={CONTATO.whatsapp.link} class="botao botao-claro" target="_blank" rel="noopener">
+          <Icon nome="whatsapp" tamanho={18} /> Fale conosco
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" id="sobre">
+    <div class="container sobre">
+      <div>
+        <span class="sobretitulo">Quem somos</span>
+        <h2>Sobre a H.Lar</h2>
+        <p>
+          Movida pela visão empreendedora da Direção do Grupo HERVAL, a H.Lar nasceu como resultado da busca constante por
+          novas oportunidades, alinhando as necessidades do mercado aos diferenciais competitivos do Grupo. Essa
+          combinação estabeleceu bases sólidas para o surgimento de uma nova marca e unidade de negócio.
+        </p>
+        <p>
+          Em 2004, o lançamento de um produto bem-sucedido, embora desafiador em termos de gestão, trouxe aprendizados
+          valiosos e despertou o interesse em atuar no setor da construção civil com um novo posicionamento.
+        </p>
+        <p>
+          Desde então, com uma equipe bem estruturada e o suporte das áreas corporativas do Grupo HERVAL, a H.Lar traça
+          novos horizontes para consolidar seu plano de expansão, mantendo os valores que são marca registrada do Grupo:
+          qualidade, detalhe por detalhe.
+        </p>
+      </div>
+      <blockquote class="sobre-lema">
+        <p>Qualidade, detalhe por detalhe.</p>
+        <footer>Os valores que são marca registrada do Grupo HERVAL, em cada empreendimento da H.Lar.</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="secao secao-cinza" id="empreendimentos">
+    <div class="container">
+      <div class="titulo-centro">
+        <span class="sobretitulo">Encontre seu novo lar</span>
+        <h2>Empreendimentos em destaque</h2>
+      </div>
+      <div class="empreendimentos">
+        {
+          EMPREENDIMENTOS.map((e) => (
+            <article class="empreendimento">
+              <div class="empreendimento-logo" style={`background: ${e.fundo}`}>
+                <Image src={imagem(e.imagem)} alt={`Logotipo ${e.nome}`} widths={[400, 736]} sizes="(max-width: 760px) 100vw, 540px" />
+              </div>
+              <div class="empreendimento-corpo">
+                <h3>{e.nome}</h3>
+                <p>{e.descricao}</p>
+                <a href={e.link} class="botao botao-contorno" target="_blank" rel="noopener">
+                  Quero saber mais <Icon nome="seta" tamanho={18} />
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" id="contato">
+    <div class="container contato">
+      <div>
+        <span class="sobretitulo">Atendimento</span>
+        <h2>Informações de contato</h2>
+        <ul class="contato-lista">
+          <li>
+            <Icon nome="local" />
+            <span><strong>Endereço</strong>{CONTATO.endereco}</span>
+          </li>
+          <li>
+            <Icon nome="usuario" />
+            <span><strong>{CONTATO.responsavel.cargo}</strong>{CONTATO.responsavel.nome}</span>
+          </li>
+          <li>
+            <Icon nome="whatsapp" />
+            <span>
+              <strong>WhatsApp</strong>
+              <a href={CONTATO.whatsapp.link} target="_blank" rel="noopener">{CONTATO.whatsapp.texto}</a>
+            </span>
+          </li>
+          <li>
+            <Icon nome="email" />
+            <span><strong>E-mail</strong><a href={`mailto:${CONTATO.email}`}>{CONTATO.email}</a></span>
+          </li>
+          <li>
+            <Icon nome="relogio" />
+            <span><strong>Horário de atendimento</strong>{CONTATO.horario.map((linha) => <>{linha}<br /></>)}</span>
+          </li>
+        </ul>
+        <div class="contato-botoes">
+          <a href={CONTATO.whatsapp.link} class="botao" target="_blank" rel="noopener">
+            <Icon nome="whatsapp" tamanho={18} /> Chamar no WhatsApp
+          </a>
+          <a href={SITE.instagram} class="botao botao-contorno" target="_blank" rel="noopener">
+            <Icon nome="instagram" tamanho={18} /> Instagram
+          </a>
+        </div>
+      </div>
+      <div class="contato-mapa">
+        <iframe
+          src={`https://maps.google.com/maps?q=${encodeURIComponent(CONTATO.mapa)}&z=16&output=embed`}
+          title="Mapa: H.Lar Construções em Novo Hamburgo"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+        <a
+          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONTATO.mapa)}`}
+          class="cartao-link"
+          target="_blank"
+          rel="noopener"
+        >
+          Como chegar <Icon nome="seta" tamanho={16} />
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    align-items: center;
+    min-height: clamp(440px, 62vh, 640px);
+    overflow: hidden;
+    background: var(--grafite);
+    color: var(--branco);
+  }
+
+  .hero :global(.hero-foto),
+  .hero :global(picture) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 60% center;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgb(20 20 22 / 0.82) 0%, rgb(20 20 22 / 0.55) 50%, rgb(20 20 22 / 0.15) 100%);
+  }
+
+  .hero-texto {
+    position: relative;
+    z-index: 1;
+    padding-block: 64px;
+  }
+
+  .hero .sobretitulo {
+    color: var(--branco);
+    opacity: 0.85;
+  }
+
+  .hero h1 {
+    max-width: 640px;
+    margin-bottom: 16px;
+    color: inherit;
+    font-size: clamp(2.3rem, 1.6rem + 3vw, 3.75rem);
+    font-weight: 900;
+    line-height: 1.08;
+  }
+
+  .hero p {
+    max-width: 520px;
+    margin-bottom: 32px;
+    font-size: clamp(1.05rem, 1rem + 0.4vw, 1.25rem);
+    opacity: 0.92;
+  }
+
+  .hero-botoes,
+  .contato-botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .sobre {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    align-items: center;
+    gap: clamp(32px, 6vw, 88px);
+  }
+
+  .sobre-lema {
+    position: relative;
+    margin: 0;
+    padding: 44px 40px 40px;
+    border-radius: var(--raio);
+    background: var(--vermelho);
+    color: var(--branco);
+    overflow: hidden;
+  }
+
+  .sobre-lema::before {
+    content: '“';
+    position: absolute;
+    right: 18px;
+    top: -36px;
+    font-size: 220px;
+    font-weight: 900;
+    line-height: 1;
+    opacity: 0.15;
+  }
+
+  .sobre-lema p {
+    position: relative;
+    margin-bottom: 18px;
+    font-size: clamp(1.7rem, 1.3rem + 1.4vw, 2.3rem);
+    font-weight: 900;
+    line-height: 1.15;
+  }
+
+  .sobre-lema footer {
+    position: relative;
+    padding-top: 18px;
+    border-top: 1px solid rgb(255 255 255 / 0.35);
+    font-size: 15px;
+    line-height: 1.6;
+    opacity: 0.92;
+  }
+
+  @media (max-width: 860px) {
+    .sobre {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .titulo-centro {
+    margin-bottom: 44px;
+    text-align: center;
+  }
+
+  .titulo-centro h2 {
+    margin: 0;
+  }
+
+  .empreendimentos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+
+  @media (max-width: 760px) {
+    .empreendimentos {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .empreendimento {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: var(--raio);
+    background: var(--branco);
+    box-shadow: 0 2px 12px rgb(0 0 0 / 0.06);
+    transition: box-shadow 0.25s, transform 0.25s;
+  }
+
+  .empreendimento:hover {
+    box-shadow: var(--sombra);
+    transform: translateY(-4px);
+  }
+
+  .empreendimento-logo {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 736 / 470;
+    overflow: hidden;
+  }
+
+  .empreendimento-logo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s;
+  }
+
+  .empreendimento:hover .empreendimento-logo :global(img) {
+    transform: scale(1.04);
+  }
+
+  .empreendimento-corpo {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 28px 30px 30px;
+    border-top: 3px solid var(--vermelho);
+  }
+
+  .empreendimento-corpo p {
+    flex: 1;
+    margin-bottom: 22px;
+    color: var(--suave);
+  }
+
+  .contato {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: clamp(32px, 5vw, 72px);
+  }
+
+  @media (max-width: 860px) {
+    .contato {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .contato-lista {
+    display: grid;
+    gap: 20px;
+    margin: 8px 0 32px;
+    padding: 0;
+    list-style: none;
+    line-height: 1.55;
+  }
+
+  .contato-lista li {
+    display: flex;
+    gap: 16px;
+  }
+
+  .contato-lista .icone {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    padding: 11px;
+    border-radius: 50%;
+    background: var(--vermelho-claro);
+    color: var(--vermelho);
+  }
+
+  .contato-lista strong {
+    display: block;
+    color: var(--grafite);
+    font-size: 14px;
+    letter-spacing: 0.02em;
+  }
+
+  .contato-lista a {
+    color: var(--texto);
+    overflow-wrap: anywhere;
+  }
+
+  .contato-lista a:hover {
+    color: var(--vermelho);
+  }
+
+  .contato-mapa {
+    display: grid;
+    gap: 14px;
+  }
+
+  .contato-mapa iframe {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3.4;
+    border: 0;
+    border-radius: var(--raio);
+    background: var(--cinza);
+    box-shadow: var(--sombra);
+  }
+
+  .contato-mapa .cartao-link {
+    text-decoration: none;
+  }
+</style>

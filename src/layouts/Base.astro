@@ -1,0 +1,57 @@
+---
+import '@fontsource/lato/400.css';
+import '@fontsource/lato/400-italic.css';
+import '@fontsource/lato/700.css';
+import '@fontsource/lato/900.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+import { SITE, CONTATO } from '../config.mjs';
+import { url } from '../lib/site.mjs';
+
+interface Props {
+  titulo?: string;
+  descricao?: string;
+}
+
+const { titulo, descricao = SITE.descricao } = Astro.props;
+const tituloCompleto = titulo ? `${titulo} – ${SITE.nome}` : SITE.titulo;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const imagemSocial = new URL(url('/og.jpg'), Astro.site);
+---
+
+<!doctype html>
+<html lang={SITE.idioma}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descricao} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={url('/favicon-32.png')} sizes="32x32" />
+    <link rel="icon" href={url('/favicon-192.png')} sizes="192x192" />
+    <link rel="apple-touch-icon" href={url('/apple-touch-icon.png')} />
+    <link rel="sitemap" href={url('/sitemap-index.xml')} />
+    <meta name="theme-color" content="#ed2a28" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={SITE.nome} />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imagemSocial} />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <a href="#conteudo" class="pular">Pular para o conteúdo</a>
+    <Header />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Footer />
+    <a href={CONTATO.whatsapp.link} class="whatsapp-flutuante" target="_blank" rel="noopener" aria-label="Conversar pelo WhatsApp">
+      <Icon nome="whatsapp" tamanho={30} />
+    </a>
+  </body>
+</html>

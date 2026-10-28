@@ -1,0 +1,488 @@
+:root {
+  --vermelho: #ed2a28;
+  --vermelho-escuro: #c81d1b;
+  --vermelho-claro: #fdeceb;
+  --grafite: #222222;
+  --texto: #474a4d;
+  --suave: #63676a;
+  --cinza: #eeeeee;
+  --cinza-claro: #f5f5f4;
+  --borda: #e2e2e2;
+  --branco: #ffffff;
+  --fonte: 'Lato', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --largura: 1140px;
+  --raio: 6px;
+  --sombra: 0 10px 30px rgb(0 0 0 / 0.08);
+  --topo-altura: 84px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--topo-altura);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--branco);
+  color: var(--texto);
+  font-family: var(--fonte);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+body.sem-rolagem {
+  overflow: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--vermelho);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 0.6em;
+  color: var(--grafite);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem);
+}
+
+h2 {
+  font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.4rem);
+  font-weight: 900;
+}
+
+h3 {
+  font-size: 1.35rem;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+.container {
+  width: 100%;
+  max-width: calc(var(--largura) + 2 * 24px);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.pular {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--grafite);
+  color: var(--branco);
+  border-radius: var(--raio);
+}
+
+.pular:focus {
+  top: 12px;
+}
+
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--vermelho) 55%, transparent);
+  outline-offset: 2px;
+}
+
+/* ---------- Buttons ---------- */
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border: 2px solid var(--vermelho);
+  border-radius: 99px;
+  background: var(--vermelho);
+  color: var(--branco);
+  font: 700 15px/1.2 var(--fonte);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.botao:hover {
+  background: var(--vermelho-escuro);
+  border-color: var(--vermelho-escuro);
+}
+
+.botao .icone {
+  transition: transform 0.2s;
+}
+
+.botao:hover .icone[viewBox] {
+  transform: translateX(3px);
+}
+
+.botao-contorno {
+  background: transparent;
+  color: var(--vermelho);
+}
+
+.botao-contorno:hover {
+  background: var(--vermelho);
+  color: var(--branco);
+}
+
+.botao-claro {
+  background: var(--branco);
+  border-color: var(--branco);
+  color: var(--grafite);
+}
+
+.botao-claro:hover {
+  background: transparent;
+  border-color: var(--branco);
+  color: var(--branco);
+}
+
+/* ---------- Header ---------- */
+
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--branco);
+  transition: box-shadow 0.2s;
+}
+
+.topo.rolado {
+  box-shadow: 0 2px 18px rgb(0 0 0 / 0.08);
+}
+
+.topo-h {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--topo-altura);
+  gap: 24px;
+}
+
+.topo-logo img {
+  width: 170px;
+}
+
+.menu > ul {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 14px;
+  color: var(--grafite);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.menu a::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 4px;
+  height: 2px;
+  background: var(--vermelho);
+  transform: scaleX(0);
+  transition: transform 0.2s;
+}
+
+.menu a:hover,
+.menu a.atual {
+  color: var(--vermelho);
+}
+
+.menu a:hover::after,
+.menu a.atual::after {
+  transform: scaleX(1);
+}
+
+.menu a .icone {
+  opacity: 0.6;
+}
+
+.menu-botao {
+  display: none;
+  padding: 8px;
+  border: 0;
+  background: none;
+  color: var(--grafite);
+  cursor: pointer;
+}
+
+.menu-fechar,
+.menu-aberto .menu-abrir {
+  display: none;
+}
+
+.menu-aberto .menu-fechar {
+  display: block;
+}
+
+@media (max-width: 860px) {
+  :root {
+    --topo-altura: 68px;
+  }
+
+  .topo-logo img {
+    width: 136px;
+  }
+
+  .menu-botao {
+    display: block;
+  }
+
+  .menu {
+    position: fixed;
+    inset: var(--topo-altura) 0 0;
+    overflow-y: auto;
+    padding: 12px 24px 32px;
+    background: var(--branco);
+    border-top: 1px solid var(--cinza);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
+  }
+
+  .menu-aberto .menu {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .menu > ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .menu li {
+    border-bottom: 1px solid var(--cinza);
+  }
+
+  .menu a {
+    padding: 14px 0;
+    font-size: 17px;
+  }
+
+  .menu a::after {
+    display: none;
+  }
+}
+
+/* ---------- Sections ---------- */
+
+.secao {
+  padding-block: clamp(56px, 8vw, 104px);
+}
+
+.secao-cinza {
+  background: var(--cinza-claro);
+}
+
+.sobretitulo {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--vermelho);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.cartao-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--vermelho);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.cartao-link .icone {
+  transition: transform 0.2s;
+}
+
+.cartao-link:hover .icone {
+  transform: translateX(4px);
+}
+
+/* ---------- Footer ---------- */
+
+.rodape {
+  background: var(--grafite);
+  color: rgb(255 255 255 / 0.78);
+  font-size: 15px;
+}
+
+.rodape a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.rodape a:hover {
+  color: var(--branco);
+  text-decoration: underline;
+}
+
+.rodape-h {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr 1.3fr 0.8fr;
+  gap: 40px;
+  padding-block: 60px 48px;
+}
+
+@media (max-width: 960px) {
+  .rodape-h {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .rodape-h {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+.rodape-marca {
+  margin-bottom: 8px;
+  color: var(--branco);
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.rodape-marca::before {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 4px;
+  margin-bottom: 14px;
+  border-radius: 2px;
+  background: var(--vermelho);
+}
+
+.rodape-titulo {
+  margin-bottom: 16px;
+  color: var(--branco);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.rodape-links,
+.rodape-contato {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rodape-links li + li {
+  margin-top: 4px;
+}
+
+.rodape-contato li {
+  display: flex;
+  gap: 12px;
+  line-height: 1.5;
+}
+
+.rodape-contato li + li {
+  margin-top: 12px;
+}
+
+.rodape-contato .icone {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--vermelho);
+}
+
+.rodape-redes {
+  display: flex;
+  gap: 10px;
+}
+
+.rodape-redes a {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgb(255 255 255 / 0.3);
+  border-radius: 50%;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.rodape-redes a:hover {
+  border-color: var(--vermelho);
+  background: var(--vermelho);
+}
+
+.rodape-base {
+  padding-block: 18px;
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* ---------- Floating WhatsApp button ---------- */
+
+.whatsapp-flutuante {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #25d366;
+  color: var(--branco);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.whatsapp-flutuante:hover {
+  box-shadow: 0 8px 26px rgb(0 0 0 / 0.28);
+  transform: scale(1.06);
+}

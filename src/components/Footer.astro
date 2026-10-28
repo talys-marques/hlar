@@ -1,0 +1,52 @@
+---
+import Icon from './Icon.astro';
+import { SITE, CONTATO, NAVEGACAO } from '../config.mjs';
+import { url } from '../lib/site.mjs';
+
+const ano = new Date().getFullYear();
+---
+
+<footer class="rodape">
+  <div class="container rodape-h">
+    <div class="rodape-col">
+      <p class="rodape-marca">H.Lar Construções</p>
+      <p>Uma empresa do Grupo Herval.<br />Qualidade, detalhe por detalhe.</p>
+    </div>
+
+    <div class="rodape-col">
+      <h2 class="rodape-titulo">Navegação</h2>
+      <ul class="rodape-links">
+        {
+          NAVEGACAO.map((item) => (
+            <li>
+              <a href={url(item.href)} {...(item.externo && { target: '_blank', rel: 'noopener' })}>
+                {item.titulo}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="rodape-col">
+      <h2 class="rodape-titulo">Contato</h2>
+      <ul class="rodape-contato">
+        <li><Icon nome="local" tamanho={18} /><span>{CONTATO.endereco}</span></li>
+        <li><Icon nome="whatsapp" tamanho={18} /><a href={CONTATO.whatsapp.link} target="_blank" rel="noopener">{CONTATO.whatsapp.texto}</a></li>
+        <li><Icon nome="email" tamanho={18} /><a href={`mailto:${CONTATO.email}`}>{CONTATO.email}</a></li>
+      </ul>
+    </div>
+
+    <div class="rodape-col">
+      <h2 class="rodape-titulo">Siga nas redes</h2>
+      <div class="rodape-redes">
+        <a href={SITE.instagram} target="_blank" rel="noopener" aria-label="Instagram"><Icon nome="instagram" /></a>
+        <a href={CONTATO.whatsapp.link} target="_blank" rel="noopener" aria-label="WhatsApp"><Icon nome="whatsapp" /></a>
+        <a href={SITE.linktree} target="_blank" rel="noopener" aria-label="Linktree"><Icon nome="link" /></a>
+      </div>
+    </div>
+  </div>
+  <div class="rodape-base">
+    <div class="container">© {ano} H.Lar Construções – Uma empresa do Grupo Herval</div>
+  </div>
+</footer>

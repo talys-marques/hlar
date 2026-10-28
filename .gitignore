@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+.env
+
+# Local preview config with machine-specific paths
+.claude/launch.json

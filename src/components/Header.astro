@@ -1,0 +1,77 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import logo from '../assets/img/logo.png';
+import { NAVEGACAO } from '../config.mjs';
+import { url } from '../lib/site.mjs';
+---
+
+<header class="topo">
+  <div class="container topo-h">
+    <a href={url('/')} class="topo-logo" aria-label="H.Lar Construções – página inicial">
+      <Image src={logo} alt="H.Lar Construções" width={170} densities={[1, 2]} loading="eager" />
+    </a>
+
+    <button class="menu-botao" type="button" aria-expanded="false" aria-controls="menu-principal">
+      <Icon nome="menu" class="menu-abrir" />
+      <Icon nome="fechar" class="menu-fechar" />
+      <span class="sr-only">Menu</span>
+    </button>
+
+    <nav id="menu-principal" class="menu" aria-label="Principal">
+      <ul>
+        {
+          NAVEGACAO.map((item) => (
+            <li>
+              {item.externo ? (
+                <a href={item.href} target="_blank" rel="noopener">
+                  {item.titulo} <Icon nome="externo" tamanho={13} />
+                </a>
+              ) : (
+                <a href={url(item.href)} data-secao={item.href.split('#')[1] ?? 'inicio'}>
+                  {item.titulo}
+                </a>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector('.topo');
+  const botao = document.querySelector('.menu-botao');
+
+  const fecharMenu = () => {
+    header.classList.remove('menu-aberto');
+    botao.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('sem-rolagem');
+  };
+
+  botao.addEventListener('click', () => {
+    const aberto = header.classList.toggle('menu-aberto');
+    botao.setAttribute('aria-expanded', String(aberto));
+    document.body.classList.toggle('sem-rolagem', aberto);
+  });
+
+  // Anchor links stay on the same page, so the mobile menu has to close itself
+  for (const link of document.querySelectorAll('.menu a')) link.addEventListener('click', fecharMenu);
+
+  const marcarRolagem = () => header.classList.toggle('rolado', window.scrollY > 40);
+  marcarRolagem();
+  window.addEventListener('scroll', marcarRolagem, { passive: true });
+
+  // Highlights the menu item of the section on screen (home page only)
+  const links = [...document.querySelectorAll('.menu a[data-secao]')];
+  const secoes = links.map((a) => document.getElementById(a.dataset.secao)).filter(Boolean);
+  if (secoes.length) {
+    const marcar = (id) => links.forEach((a) => a.classList.toggle('atual', a.dataset.secao === id));
+    const observador = new IntersectionObserver(
+      (entradas) => entradas.filter((e) => e.isIntersecting).forEach((e) => marcar(e.target.id)),
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    secoes.forEach((s) => observador.observe(s));
+  }
+</script>
